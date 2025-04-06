@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme -->
+    <style name="Theme.MobileSecurity_HW1" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#3949AB</item>
+        <item name="colorPrimaryVariant">#908FF0</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">#B5BDED</item>
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/AppButton</item>
+        <!-- Card styles -->
+        <item name="materialCardViewStyle">@style/AppCard</item>
+    </style>
+
+    <!-- Custom button style -->
+    <style name="AppButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <!-- Custom card style -->
+    <style name="AppCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="contentPadding">0dp</item>
+    </style>
+
+    <!-- Custom text styles for indicators -->
+    <style name="IndicatorText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="IndicatorText.Success">
+        <item name="android:textColor">@color/colorCheckmark</item>
+    </style>
+
+    <style name="IndicatorText.Error">
+        <item name="android:textColor">@color/colorX</item>
+    </style>
+</resources>
