@@ -1,4 +1,4 @@
-# מערכת אימות מתקדמת - Advanced Authentication System
+# Advanced Authentication System
 
 ## Overview
 
