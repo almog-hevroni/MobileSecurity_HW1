@@ -1,4 +1,4 @@
-# Advanced Authentication System
+# 📱 Advanced Authentication System
 
 ## Overview
 
@@ -70,40 +70,8 @@ The application leverages various Android sensors and system APIs:
     - `SensorManager.getOrientation()`
 - Tracks device rotation through quadrants to count complete 360° rotations
 
-## Technical Implementation
+## Setup Instructions
 
-### Sensor Registration
-```kotlin
-override fun onResume() {
-    super.onResume()
-
-    val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-    val magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-
-    accelerometer?.let {
-        sensorManager.registerListener(
-            this,
-            it,
-            SensorManager.SENSOR_DELAY_GAME
-        )
-    }
-
-    magnetometer?.let {
-        sensorManager.registerListener(
-            this,
-            it,
-            SensorManager.SENSOR_DELAY_GAME
-        )
-    }
-
-    lightSensor?.let {
-        sensorManager.registerListener(
-            this,
-            it,
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
-    }
-    
-    // Reset sensors and states
-    // ...
-}
+1. Clone the repository
+2. Open the project in Android Studio
+3. Build and run the project
