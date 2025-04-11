@@ -1,7 +1,6 @@
 package com.example.mobilesecurity_hw1
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -45,8 +44,12 @@ class SuccessActivity : AppCompatActivity() {
         summaryBuilder.append("מצב טיסה הופעל ")
         summaryBuilder.append("<font color='#4CAF50'>✓</font><br><br>")
 
-        summaryBuilder.append("6. 🧭 ")
-        summaryBuilder.append("בוצעו שלושת הסיבובים הנדרשים במצפן ")
+        summaryBuilder.append("6. 📱 ")
+        summaryBuilder.append("סריקת הברקוד של המוצר הספציפי הושלמה בהצלחה ")
+        summaryBuilder.append("<font color='#4CAF50'>✓</font><br><br>")
+
+        summaryBuilder.append("7. 🧢 ")
+        summaryBuilder.append("צולם וזוהה כובע ")
         summaryBuilder.append("<font color='#4CAF50'>✓</font>")
 
         tvConditionsSummary.text = android.text.Html.fromHtml(summaryBuilder.toString(), android.text.Html.FROM_HTML_MODE_COMPACT)

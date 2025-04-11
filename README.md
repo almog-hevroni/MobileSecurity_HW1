@@ -4,7 +4,7 @@
 
 This Android application demonstrates an advanced multi-factor authentication system using various device sensors and conditions. Users must meet all six authentication conditions to gain access to the system. The application is written in Kotlin and designed with a focus on mobile security and implementing different sensor-based authentication factors.
 
-## Authentication Conditions
+## 🔐 Authentication Conditions
 
 The app requires users to fulfill all of the following conditions for successful authentication:
 
@@ -34,8 +34,11 @@ The app requires users to fulfill all of the following conditions for successful
 6. **📱 Barcode Scanning Authentication**
     - The user must scan a specific barcode (7290000176420)
     - Uses a barcode scanning library to validate the correct product
+7. **🧢 Hat Detection**
+   - The user must take a photo of a hat
+   - Uses ML Kit image labeling to identify hats in photos
 
-## Application Structure
+## 🏗️ Application Structure
 
 The application follows a clean, modular architecture:
 
@@ -60,6 +63,7 @@ The app uses a pattern of individual condition checker classes that all implemen
     - **FlashDetector**: Uses light sensor to detect camera flash
     - **AirplaneModeChecker**: Monitors airplane mode status
     - **BarcodeScanner**: Handles barcode scanning and validation
+    - **HatDetector**: Uses ML Kit to detect a hat in a photo.
 
 ## Sensor and API Usage
 
@@ -92,24 +96,26 @@ The application leverages various Android sensors and system APIs:
 - Implements `ActivityResultLauncher` for modern barcode scanning
 - Validates against a specific target barcode
 
-## UI Components
-
-- **Happy/Sad Face Indicators**: Visual feedback for each condition
-- **Material Design Elements**: Uses MaterialCardView and MaterialButtons
-- **Right-to-Left (RTL) Support**: Full support for RTL text and layouts
-- **Success Screen**: Summarizes all completed conditions with icons
+### 7. Image Recognition
+- Uses Google ML Kit's image labeling API
+- Captures photos using Android's camera intent
+- Analyzes images to detect hats with confidence threshold of 30%
 
 ## Setting Up the Project
 
 1. Clone the repository
+    ```sh 
+        git clone https://github.com/almog-hevroni/MobileSecurity_HW1
+    ```
 2. Open the project in Android Studio
 3. Add the required dependencies in your build.gradle:
    ```gradle
-   implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+   implementation(libs.zxing.android.embedded)
+   implementation (libs.image.labeling)
 
 4. Build and run on a device with the required sensors (light sensor, etc.)
 
-## Testing the Application
+## 🔍 Testing the Application
 
 To successfully authenticate:
 1. Open the app within the first 20 seconds of any minute
@@ -119,3 +125,11 @@ To successfully authenticate:
 5. Enable Airplane Mode
 6. Scan the required barcode (7290000176420)
 7. Press the "כניסה למערכת" (Enter System) button
+
+## 🧩 Extending the Project
+
+The application is designed in a modular structure making it easy to add new authentication conditions:
+
+1. Create a new class extending BaseConditionChecker
+2. Implement the required interface methods
+3. Add the new class to the ConditionManager

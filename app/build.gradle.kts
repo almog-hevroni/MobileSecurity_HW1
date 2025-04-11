@@ -45,4 +45,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // ZXing barcode scanning library
+    implementation(libs.zxing.android.embedded)
+
+    // ML Kit for Image Labeling (object detection)
+    implementation (libs.image.labeling)
+
 }
+
