@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Android application demonstrates an advanced multi-factor authentication system using various device sensors and conditions. Users must meet all six authentication conditions to gain access to the system. The application is written in Kotlin and designed with a focus on mobile security.
+This Android application demonstrates an advanced multi-factor authentication system using various device sensors and conditions. Users must meet all six authentication conditions to gain access to the system. The application is written in Kotlin and designed with a focus on mobile security and implementing different sensor-based authentication factors.
 
 ## Authentication Conditions
 
@@ -10,7 +10,7 @@ The app requires users to fulfill all of the following conditions for successful
 
 1. **⏰ Time Window Authentication**
     - Access is restricted to the first 20 seconds of any minute
-    - Requires precise timing for authentication attempts
+    - Continuously monitors time to check this condition
 
 2. **👆 Specific Touch Pattern**
     - Users must tap three areas in the correct sequence:
@@ -31,47 +31,91 @@ The app requires users to fulfill all of the following conditions for successful
     - The device must be in Airplane Mode
     - Uses system settings to check the airplane mode status
 
-6. **🧭 Compass Rotation Authentication**
-    - The user must rotate the device completely 3 times
-    - Uses accelerometer and magnetometer sensors to track device rotation
+6. **📱 Barcode Scanning Authentication**
+    - The user must scan a specific barcode (7290000176420)
+    - Uses a barcode scanning library to validate the correct product
 
-## Sensor Usage
+## Application Structure
+
+The application follows a clean, modular architecture:
+
+### Core Components
+
+- **MainActivity**: Entry point that manages the UI and condition checking
+- **SuccessActivity**: Displays success message when all conditions are met
+- **ConditionManager**: Coordinates all condition checkers
+
+### Condition Checkers
+
+The app uses a pattern of individual condition checker classes that all implement the `ConditionChecker` interface:
+
+1. **BaseConditionChecker**: Abstract class implementing common functionality
+    - Manages UI updates for condition state
+    - Handles basic condition state tracking
+
+2. **Specialized Condition Checkers**:
+    - **TimeWindowChecker**: Checks if current time is within first 20 seconds
+    - **TouchPatternChecker**: Manages the three-point touch pattern sequence
+    - **UsbChargingChecker**: Verifies USB charging status
+    - **FlashDetector**: Uses light sensor to detect camera flash
+    - **AirplaneModeChecker**: Monitors airplane mode status
+    - **BarcodeScanner**: Handles barcode scanning and validation
+
+## Sensor and API Usage
 
 The application leverages various Android sensors and system APIs:
 
 ### 1. System Clock
-- Uses `Calendar.getInstance()` to check the current time for the time window authentication
-- Continuously monitors time using a Handler with postDelayed for regular checks
+- Uses `Calendar.getInstance()` to check the current time
+- Continuously monitors time using a Handler with postDelayed
 
-### 2. Touch Sensors
+### 2. Touch System
 - Implements custom touch areas with `FrameLayout` components
-- Uses click listeners to detect touches in specific regions of the screen
-- Visual feedback through circular markers that appear briefly when touched
+- Uses click listeners to detect touches in specific regions
+- Provides visual feedback through custom circular markers
 
 ### 3. Battery Management API
-- Uses `BatteryManager` and `Intent.ACTION_BATTERY_CHANGED` broadcast receiver
-- Specifically checks for `BatteryManager.BATTERY_PLUGGED_USB` to verify USB charging
+- Uses `BatteryManager` and `Intent.ACTION_BATTERY_CHANGED`
+- Specifically checks for `BatteryManager.BATTERY_PLUGGED_USB`
 
 ### 4. Light Sensor
 - Utilizes `Sensor.TYPE_LIGHT` to detect ambient light levels
-- Establishes a baseline light level and then detects significant increases (camera flash)
-- Implementation note: Requires `android.hardware.sensor.light` feature in manifest
+- Establishes a baseline and detects significant increases (flash)
+- Implements `SensorEventListener` for real-time monitoring
 
 ### 5. System Settings
-- Reads `Settings.Global.AIRPLANE_MODE_ON` to check if Airplane Mode is enabled
+- Reads `Settings.Global.AIRPLANE_MODE_ON` to check airplane mode
 - Continuously polls this setting to detect changes
 
-### 6. Compass/Orientation Sensors
-- Uses a combination of:
-    - `Sensor.TYPE_ACCELEROMETER`: Detects device acceleration forces
-    - `Sensor.TYPE_MAGNETIC_FIELD`: Detects Earth's magnetic field
-- Combines data to calculate orientation angles using:
-    - `SensorManager.getRotationMatrix()`
-    - `SensorManager.getOrientation()`
-- Tracks device rotation through quadrants to count complete 360° rotations
+### 6. Barcode Scanning
+- Uses the ZXing library (via journeyapps barcode-scanner)
+- Implements `ActivityResultLauncher` for modern barcode scanning
+- Validates against a specific target barcode
 
-## Setup Instructions
+## UI Components
+
+- **Happy/Sad Face Indicators**: Visual feedback for each condition
+- **Material Design Elements**: Uses MaterialCardView and MaterialButtons
+- **Right-to-Left (RTL) Support**: Full support for RTL text and layouts
+- **Success Screen**: Summarizes all completed conditions with icons
+
+## Setting Up the Project
 
 1. Clone the repository
 2. Open the project in Android Studio
-3. Build and run the project
+3. Add the required dependencies in your build.gradle:
+   ```gradle
+   implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
+4. Build and run on a device with the required sensors (light sensor, etc.)
+
+## Testing the Application
+
+To successfully authenticate:
+1. Open the app within the first 20 seconds of any minute
+2. Complete the touch pattern (top-left → center → bottom-left)
+3. Connect your device to a USB charger
+4. Have someone flash a camera light at your device
+5. Enable Airplane Mode
+6. Scan the required barcode (7290000176420)
+7. Press the "כניסה למערכת" (Enter System) button
